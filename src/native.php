@@ -6,6 +6,8 @@
  */
 function s($variable)
 {
+    // @todo there is a some sort of utf8 character which prevents the printf
+    // from printing
     printf("%s\n", serialize($variable));
 }
 
@@ -28,3 +30,9 @@ s(array('foo' => array('bar' => 'baz', '123' => 'qwe')));
 
 class EmptyCls { }
 s(new EmptyCls());
+
+class PlainCls
+{
+    protected $_1stVariable = "I am first!";
+}
+s(new PlainCls());

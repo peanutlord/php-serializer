@@ -114,6 +114,13 @@ class Serializer
             if (!$p->isPublic()) {
                 $p->setAccessible(true);
             }
+
+            // @todo serialize the property name as string
+            // @todo find out the unicode char...
+            // @todo add support for static properties
+
+            // $chunks[] = $this->serialize(sprintf('\0*\0%s', $p->getName()));
+            $chunks[] = $this->serialize($p->getValue($object));
         }
 
         return sprintf('O:%d:"%s":%d:{%s}',

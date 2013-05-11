@@ -8,6 +8,14 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class EmptyCls { }
 
 /**
+ * Plain class for test case
+ */
+class PlainCls
+{
+    protected $_1stVariable = "I am first!";
+}
+
+/**
  * Serializer test case.
  */
 class SerializerTest extends PHPUnit_Framework_TestCase
@@ -99,6 +107,16 @@ class SerializerTest extends PHPUnit_Framework_TestCase
      */
     public function testSerializeEmptyObject()
     {
-        $this->assertEquals(serialize(new EmptyCls()), $this->_invoke('_serializeObject', new EmptyCls()));
+        $e = new EmptyCls();
+        $this->assertEquals(serialize($e), $this->_invoke('_serializeObject', $e));
+    }
+
+    /**
+     *
+     */
+    public function testSerializePlainObject()
+    {
+        $p = new PlainCls();
+        $this->assertEquals(serialize($p), $this->_invoke('_serializeObject', $p));
     }
 }
