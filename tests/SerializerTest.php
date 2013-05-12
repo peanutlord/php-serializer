@@ -16,6 +16,22 @@ class PlainCls
 }
 
 /**
+ * A little bit more complex class with nested classes
+ */
+class ComplexClass
+{
+    protected $_emptyCls = null;
+
+    protected $_plainCls = null;
+
+    public function __construct()
+    {
+        $this->_emptyCls = new EmptyCls();
+        $this->_plainCls = new PlainCls();
+    }
+}
+
+/**
  * Serializer test case.
  */
 class SerializerTest extends PHPUnit_Framework_TestCase
@@ -118,5 +134,11 @@ class SerializerTest extends PHPUnit_Framework_TestCase
     {
         $p = new PlainCls();
         $this->assertEquals(serialize($p), $this->_invoke('_serializeObject', $p));
+    }
+
+    public function testSerializeComplexClasses()
+    {
+        $c = new ComplexClass();
+        $this->assertEquals(serialize($c), $this->_invoke('_serializeObject', $c));
     }
 }

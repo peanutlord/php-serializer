@@ -38,3 +38,26 @@ class PlainCls
     protected $_1stVariable = "I am first!";
 }
 s(new PlainCls());
+
+class StaticClass
+{
+    protected static $_1stVariable = "I am first! But static :(";
+
+    protected $_2ndVariable = "I am second, but not static :)";
+}
+s(new StaticClass());
+
+class SelfReferencedClass
+{
+
+    protected $_self = null;
+
+    public function __construct()
+    {
+        $this->_self = new self();
+    }
+
+}
+
+// The native serializer doesen't seem to like classes which reference itself
+// s(new SelfReferencedClass());

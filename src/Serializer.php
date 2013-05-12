@@ -12,6 +12,7 @@ class Serializer
     /**
      * Serializes a given variable
      *
+     * @todo add stack to trace self referencing classes?
      * @param mixed toSerialize
      * @return string
      */
@@ -115,7 +116,10 @@ class Serializer
                 $p->setAccessible(true);
             }
 
-            // @todo add support for static properties
+            // Native serialize seems to ignore static properties
+            if ($p->isStatic()) {
+                continue;
+            }
 
             $chunks[] = $this->serialize(sprintf("\0*\0%s", $p->getName()));
             $chunks[] = $this->serialize($p->getValue($object));
