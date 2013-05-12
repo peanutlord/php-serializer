@@ -6,9 +6,11 @@
  */
 function s($variable)
 {
-    // @todo there is a some sort of utf8 character which prevents the printf
-    // from printing
-    printf("%s\n", serialize($variable));
+    // @todo why does serialize add the \0?
+    $s = serialize($variable);
+    $s = str_replace("\0", '', $s);
+
+    printf("%s\n", $s);
 }
 
 s(1);
