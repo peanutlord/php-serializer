@@ -89,6 +89,13 @@ class SerializerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(serialize(-1), $this->_invoke('_serializeInt', -1));
     }
 
+    public function testSerializeDouble()
+    {
+        $this->assertEquals(serialize(0.0), $this->_invoke('_serializeDouble', 0.0));
+        $this->assertEquals(serialize(1.0), $this->_invoke('_serializeDouble', 1.0));
+        $this->assertEquals(serialize(3.14), $this->_invoke('_serializeDouble', 3.14));
+    }
+
     /**
      *
      */

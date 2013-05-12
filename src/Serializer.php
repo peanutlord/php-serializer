@@ -22,9 +22,11 @@ class Serializer
 
         switch(gettype($toSerialize)) {
             case 'integer':
-            case 'double':
-                /* @todo no double atm */
                 $serialized = $this->_serializeInt($toSerialize);
+                break;
+
+            case 'double':
+                $serialized = $this->_serializeDouble($toSerialize);
                 break;
 
             case 'string':
@@ -55,6 +57,22 @@ class Serializer
     protected function _serializeInt($int)
     {
         return sprintf('i:%d;', $int);
+    }
+
+    /**
+     *
+     * @param double $double
+     * @return string
+     */
+    protected function _serializeDouble($double)
+    {
+        // The native serialize makes an int if the double has a .0
+        if ($double - (int) floor($double) > 0) {
+            // Does not match the native serializer completely
+            return sprintf("d:%.14f;", $double);
+        } else {
+            return sprintf("d:%d;", $double);
+        }
     }
 
     /**
