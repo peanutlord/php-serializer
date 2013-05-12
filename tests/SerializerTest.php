@@ -136,9 +136,26 @@ class SerializerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(serialize($p), $this->_invoke('_serializeObject', $p));
     }
 
+    /**
+     *
+     */
     public function testSerializeComplexClasses()
     {
         $c = new ComplexClass();
         $this->assertEquals(serialize($c), $this->_invoke('_serializeObject', $c));
+    }
+
+    /**
+     *
+     */
+    public function testNativeUnserialize()
+    {
+        $e = $this->_invoke('_serializeObject', new EmptyCls());
+        $p = $this->_invoke('_serializeObject', new PlainCls());
+        $c = $this->_invoke('_serializeObject', new ComplexClass());
+
+        $this->assertInstanceOf('EmptyCls',     unserialize($e));
+        $this->assertInstanceOf('PlainCls',     unserialize($p));
+        $this->assertInstanceOf('ComplexClass', unserialize($c));
     }
 }
